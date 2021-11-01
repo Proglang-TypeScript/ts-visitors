@@ -26,6 +26,11 @@ We compared 3 different approaches solving the same problem: printing the constr
 
 ([Link](src/type-narrowing/1_acceptWithTypeScriptVisitor))
 
+Run example:
+```bash
+$ npm run script -- src/type-narrowing/1_acceptWithTypeScriptVisitor/examples/printClasses.ts
+```
+
 - The same callback is used for all nodes. The kind specific logic needs to be placed inside the common callback. In our case, we are interested in the `ClassDeclaration`. The type guard `isClassDeclaration()` is used for this.
 - User needs to go through documentation to investigate which type guards are available.
 - Type guards need to be used also to handle the class members.
@@ -33,6 +38,11 @@ We compared 3 different approaches solving the same problem: printing the constr
 ### acceptWithInheritance
 
 ([Link](src/type-narrowing/2_acceptWithInheritance))
+
+Run example:
+```bash
+$ npm run script -- src/type-narrowing/2_acceptWithInheritance/examples/printClasses.ts
+```
 
 - Kind specific logic is placed in the specific callback for `ClassDeclaration`. The type guard `isClassDeclaration()` is no longer needed.
 - Kind specific callback matching is hidden behind a `node as any` clause: see [here](src/type-narrowing/2_acceptWithInheritance/accept/syntaxKindVisit.ts#L9).
@@ -43,6 +53,11 @@ We compared 3 different approaches solving the same problem: printing the constr
 ### acceptWithUnion
 
 ([Link](src/type-narrowing/3_acceptWithUnion))
+
+Run example:
+```bash
+$ npm run script -- src/type-narrowing/3_acceptWithUnion/examples/printClasses.ts
+```
 
 - Kind specific logic is placed in the specific callback for `ClassDeclaration`.
 - `ASTNode` is defined as [the union](src/type-narrowing/3_acceptWithUnion/ast/index.ts#L23) of all possible nodes instead of defining it as a single common interface.

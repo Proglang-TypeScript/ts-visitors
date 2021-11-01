@@ -35,16 +35,17 @@ We compared 3 different approaches solving the same problem: printing the constr
 ([Link](src/type-narrowing/2_acceptWithInheritance))
 
 - Kind specific logic is placed in the specific callback for `ClassDeclaration`. The type guard `isClassDeclaration()` is no longer needed.
-- Kind specific callback matching is hidden behind a `node as any` clause in `src/type-narrowing/2_acceptWithInheritance/accept/syntaxKindVisit.ts`.
-- The type `ASTNodeKindsTable` is defined to enable the kind specific callback.
+- Kind specific callback matching is hidden behind a `node as any` clause: see [here](src/type-narrowing/2_acceptWithInheritance/accept/syntaxKindVisit.ts#L9).
+- The type [ASTNodeKindsTable](src/type-narrowing/2_acceptWithInheritance/ast/index.ts#L9) is introduced to enable the kind specific callback.
 - User can easily use the IDE and code intelligence tools to inspect all available kind specific callbacks.
-- No type narrowing is used. Type guards need to be used also to handle the class members. The type `ASTClassElement` is a common single interface. The user needs to go through the documentation to identify which nodes are class members.
+- No type narrowing is used. Type guards need to be used also to handle the class members. The type [ASTClassElement](src/type-narrowing/2_acceptWithInheritance/ast/index.ts#L90) is a common single interface. The user needs to go through the documentation to identify which nodes are class members.
 
 ### acceptWithUnion
 
 ([Link](src/type-narrowing/3_acceptWithUnion))
 
 - Kind specific logic is placed in the specific callback for `ClassDeclaration`.
-- `ASTNode` is defined as [the union](src/type-narrowing/3_acceptWithUnion/ast/index.ts) of all possible nodes instead of defining it as a single common interface: `ASTNode = Unionize<ASTNodeKindsTable>;`.
-- The type `ASTClassElement` is explicitly defined as the union of the possible members: `type ASTClassElement = ASTConstructorNode | ASTMethodDeclarationNode;`
-- No type guards are needed. The compiler narrows the types by itself.
+- `ASTNode` is defined as [the union](src/type-narrowing/3_acceptWithUnion/ast/index.ts#L23) of all possible nodes instead of defining it as a single common interface.
+- The type [ASTClassElement](src/type-narrowing/3_acceptWithUnion/ast/index.ts#L90) is explicitly defined as the union of the possible members.
+- No type guards are needed. The compiler narrows the types automatically.
+- User can easily use the IDE and code intelligence tools to also inspect all available class members.

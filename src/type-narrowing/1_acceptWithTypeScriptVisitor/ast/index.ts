@@ -1,7 +1,7 @@
 export interface ASTNode {
   kind: ASTType;
   parent?: ASTNode;
-  children: ASTNode[];
+  children?: ASTNode[];
 }
 
 export type ASTNodeKinds = ASTNode['kind'];

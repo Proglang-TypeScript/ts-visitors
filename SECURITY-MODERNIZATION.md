@@ -1,0 +1,7 @@
+# Security modernization — 2026-09-14
+
+Node24 LTS is the supported runtime. Select it with nvm; lifecycle scripts are disabled and lockfiles are enforced. Exact package versions are recorded in package manifests and frozen npm lockfiles. TypeScript6.0.3 is the current compiler-API release; TypeScript7 is native-only and cannot replace libraries that import the API. Node type definitions match the supported LTS rather than the host Node26. Jest30, compatible ts-jest29.4.12, ESLint10 and Prettier3 are used where applicable. Existing compiler errors were migrated, not suppressed.
+
+Use `npm ci` in each package directory, followed by its documented build/tests/lint. Full npm audits including development dependencies report zero advisories for the maintained package directories at validation. Audit findings can change: CI/weekly dependency updates are retained. Deprecated circular-json (viewer wire-format compatibility), ts-node and upstream transitive tooling remain maintenance risks even if no current advisory applies.
+
+After `npm ci`, run `npm run install:featherweight && npm run build && npm run lint`. Featherweight setup is explicit because postinstall hooks are disabled. AST leaf children are optional and visitors terminate safely on leaves; no double-unknown casts were used to mask mismatched fixtures. The original placeholder test command is retained and is not claimed to pass.

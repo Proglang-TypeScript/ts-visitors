@@ -9,7 +9,7 @@ export function accept<R = unknown>(node: ASTNode, visitor: Visitor<R>): R | und
 const visitWithVisitor = <R = unknown>(visitor: Visitor<R>) => {
   const visit = (node: ASTNode) => {
     const preVisit = visitor.pre;
-    preVisit && preVisit(node);
+    if (preVisit) preVisit(node);
 
     const syntaxKindVisitResult = syntaxKindVisit(node, visitor);
 
@@ -31,7 +31,7 @@ const visitWithVisitor = <R = unknown>(visitor: Visitor<R>) => {
 };
 
 const defaultTraverse = (node: ASTNode, visit: (node: ASTNode) => unknown) => {
-  node.children.forEach((child) => {
+  (node.children || []).forEach((child) => {
     visit(child);
   });
 };
